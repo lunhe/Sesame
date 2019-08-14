@@ -1,5 +1,10 @@
 ###spring-web 启动流程
 [启动流程](https://my.oschina.net/klausprince/blog/1791357)
+
+```
+<load-on-start>
+配置servle的启动权限，默认情况下，servlet只有在第一次访问是实例化，配置后可以在容器启动时实例化
+```
 	
 ###spring aop 配置
 ####基于注解
