@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/resources=UTF-8
+encoding//src/main/resources/bak/commands.properties=UTF-8
+encoding//src/main/resources/bak/studentCmd.properties=UTF-8
+encoding//src/main/resources/menu.json=UTF-8
+encoding//src/main/resources/serviceTestCase/commands.properties=UTF-8
+encoding//src/main/resources/serviceTestCase/testOnline.json=UTF-8
+encoding//src/main/resources/serviceTestCase/variable.properties=UTF-8
+encoding//src/main/resources/singleCmdTest/all.properties=UTF-8
+encoding//src/main/resources/singleCmdTest/studentCmd.properties=UTF-8
+encoding//src/main/resources/singleCmdTest/teacherCmd.properties=UTF-8
+encoding//src/test/java=UTF-8
+encoding//src/test/resources=UTF-8
+encoding/<project>=UTF-8
