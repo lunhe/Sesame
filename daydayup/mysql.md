@@ -87,16 +87,49 @@ Innodb的行锁模式有以下几种：共享锁，排他锁，意向共享锁(表锁)，意向排他锁(表锁)，
 dual
 
 ```
-dual 时oracle中为了满足 select……from……的结构设置的关键字，再mysql和sqlserver中支持select 1 这中无from的语法。注意：select * from dual在mysql中报错，在oracle会返回一行默认的数据
+dual 是oracle中为了满足 select……from……的结构设置的关键字，再mysql和sqlserver中支持select 1 这中无from的语法。注意：select * from dual在mysql中报错，在oracle会返回一行默认的数据
 ```
 
 ```
 using BTREE : 使用在索引上，指明索引的数据结构（通常索引为BTREE或者HASH）  BTREE是MYISAM和InnoDB唯一支持的数据结构，MEMORY和HEAP存储引擎可以支持HASH和BTREE索引
 
-
+SET SQL_SAFE_UPDATES = 0 ：关闭数据库安全模式
 ```
 
+binlog
 
+```
+binlog： 二进制文件，包括索引文件和日志文件。索引文件用于记录哪些日志文件正在被使用，日志文件记录数据库的DDL，DML。
+binlog：不是innodb独有，基于一个个事件记录日志，
+binlog：数据恢复，数据备份，审计是否有攻击行为
+binlog：	binlog常见格式 常用row格式，准确记录每行变化的数据，
+		使用mysqlbinlog -vv(格式为row时需要)查看binlog，
+		删除binlog：reset master（删除所有日志），PURGE { BINARY | MASTER } LOGS { TO 'log_name' | BEFORE datetime_expr }删除符合条件的日志，设置日志过期参数：expire_logs_days=N。
+		常见参数：
+
+log_bin = {on | off | base_name}
+指定是否启用记录二进制日志或者指定一个日志路径
+sql_log_bin ={ on | off }
+指定是否启用记录二进制日志
+expire_logs_days
+指定自动删除二进制日志的时间，即日志过期时间
+log_bin_index
+指定mysql-bin.index文件的路径
+binlog_format = { mixed | row | statement }
+指定二进制日志基于什么模式记录
+max_binlog_size
+指定二进制日志文件最大值
+binlog_cache_size
+指定事务日志缓存区大小
+max_binlog_cache_size
+指定二进制日志缓存最大大小
+sync_binlog = { 0 | n }
+指定写缓冲多少次，刷一次盘
+
+用于解析binlog的jar：mysql-binlog-connector-java或者open-replicator
+```
+[binlog1](https://www.cnblogs.com/rjzheng/p/9721765.html)
+[binlog2](https://www.cnblogs.com/rjzheng/p/9745551.html)
 
 
 

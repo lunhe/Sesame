@@ -184,3 +184,64 @@ public class LoggerAspect {
         </aop:aspect>
     </aop:config>
 ```
+
+####tiles
+springmvc提供的一个前端布局管理插件，动态的组合jsp页面。
+
+依赖
+
+```
+<dependency>
+  <groupId>org.apache.tiles</groupId>
+  <artifactId>tiles-extras</artifactId>
+  <version>3.0.5</version>
+</dependency>
+```
+
+布局文件layout.xml,定义模板，页面布局
+
+```
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+     "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+     "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+  <!-- 主布局 -->
+  <definition name="layout" template="/mainLayout.jsp">
+  </definition>
+  <!-- 主布局 -->
+  <!-- 项目 -->
+  <definition name="myView" extends="layout">
+    <put-attribute name="a" value="/a.jsp" />
+    <put-attribute name="item" expression="/${item}.jsp" />
+  </definition>
+  <!--项目-->
+</tiles-definitions>
+```
+
+
+springMVC-servlet.xml中配置试图解析器
+
+```
+<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" p:order="1"/>
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>classpath:layout.xml</value>
+            </list>
+        </property>
+</bean>
+```
+
+配合控制器使用
+
+```
+public String introductionView(Model model) { 
+    model.addAttribute("item","introduction");//这个就是给返回值添加个属性，在页面可以直接得到item，
+//${item}   在jsp页面就可以得到后台返回的值。
+return “myView”; //这里的myView为layout.xml中配置的视图名称}
+```
+
+[tiles参考资料](https://www.cnblogs.com/handsome1013/p/6140720.html)
+
+
