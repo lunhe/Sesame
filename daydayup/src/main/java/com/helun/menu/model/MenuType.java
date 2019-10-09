@@ -20,6 +20,10 @@ public enum MenuType {
 	/**
 	 * 汤
 	 */
-	Soup
+	Soup,
+	/**
+	 * 其他主食(面，炒饭)
+	 */
+	Other
 	
 }
