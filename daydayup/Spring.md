@@ -1,21 +1,21 @@
-###spring-web Æô¶¯Á÷³Ì
-[Æô¶¯Á÷³Ì](https://my.oschina.net/klausprince/blog/1791357)
+###spring-web å¯åŠ¨æµç¨‹
+[å¯åŠ¨æµç¨‹](https://my.oschina.net/klausprince/blog/1791357)
 
 ```
 <load-on-start>
-ÅäÖÃservleµÄÆô¶¯È¨ÏŞ£¬Ä¬ÈÏÇé¿öÏÂ£¬servletÖ»ÓĞÔÚµÚÒ»´Î·ÃÎÊÊÇÊµÀı»¯£¬ÅäÖÃºó¿ÉÒÔÔÚÈİÆ÷Æô¶¯Ê±ÊµÀı»¯
+é…ç½®servleçš„å¯åŠ¨æƒé™ï¼Œé»˜è®¤æƒ…å†µä¸‹ï¼Œservletåªæœ‰åœ¨ç¬¬ä¸€æ¬¡è®¿é—®æ˜¯å®ä¾‹åŒ–ï¼Œé…ç½®åå¯ä»¥åœ¨å®¹å™¨å¯åŠ¨æ—¶å®ä¾‹åŒ–
 ```
 	
-###spring aop ÅäÖÃ
-####»ùÓÚ×¢½â
-aopÖ§³ÖºÍ×¢½âÖ§³ÖÒÀÀµ£º
+###spring aop é…ç½®
+####åŸºäºæ³¨è§£
+aopæ”¯æŒå’Œæ³¨è§£æ”¯æŒä¾èµ–ï¼š
 
 ```
    <groupId>org.springframework</groupId>
       <artifactId>spring-aop</artifactId>
       <version>4.3.1.RELEASE</version>
     </dependency>
-    <!-- aop aspect×¢½âµ¼°ü-->
+    <!-- aop aspectæ³¨è§£å¯¼åŒ…-->
     <dependency>
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjrt</artifactId>
@@ -27,22 +27,22 @@ aopÖ§³ÖºÍ×¢½âÖ§³ÖÒÀÀµ£º
       <version>1.8.9</version>
     </dependency
 ```
-×¢½âËµÃ÷£¨×¢½âÖ§³ÖÊÇ·ñĞèÒª¶îÍâµÄÅäÖÃ×÷Îª¸Ã¹¦ÄÜ¿ª¹Ø£¿£©£º
+æ³¨è§£è¯´æ˜ï¼ˆæ³¨è§£æ”¯æŒæ˜¯å¦éœ€è¦é¢å¤–çš„é…ç½®ä½œä¸ºè¯¥åŠŸèƒ½å¼€å…³ï¼Ÿï¼‰ï¼š
 
 ```
-@Aspect ×÷ÓÃÓÚÀà£¬½«Ò»¸öÀàÉêÃ÷Ò»¸öÇĞÃæ
-@Order	×÷ÓÃÓÚÀà£¬²ÎÊıint£¬´æÔÚ¶à¸öÇĞÃæÊ±£¬ÓÃÓÚÖ¸¶¨ÇĞÃæµÄÓÅÏÈ¼¶£¬ÊıÖµÔ½µÍÓÅÏÈ¼¶Ô½¸ß
-@Pointcut ×÷ÓÃÓÚ·½·¨£¬²ÎÊıexecution±í´ïÊ½£¬ÓÃÓÚÉêÃ÷ÇĞÈëµã  ±»×÷ÓÃµÄ·½·¨Ò»°ã²»ĞèÒª´æÔÚÊµÏÖ
+@Aspect ä½œç”¨äºç±»ï¼Œå°†ä¸€ä¸ªç±»ç”³æ˜ä¸€ä¸ªåˆ‡é¢
+@Order	ä½œç”¨äºç±»ï¼Œå‚æ•°intï¼Œå­˜åœ¨å¤šä¸ªåˆ‡é¢æ—¶ï¼Œç”¨äºæŒ‡å®šåˆ‡é¢çš„ä¼˜å…ˆçº§ï¼Œæ•°å€¼è¶Šä½ä¼˜å…ˆçº§è¶Šé«˜
+@Pointcut ä½œç”¨äºæ–¹æ³•ï¼Œå‚æ•°executionè¡¨è¾¾å¼ï¼Œç”¨äºç”³æ˜åˆ‡å…¥ç‚¹  è¢«ä½œç”¨çš„æ–¹æ³•ä¸€èˆ¬ä¸éœ€è¦å­˜åœ¨å®ç°
 
-ÒÔÏÂ×¢½â¶¼±ØĞëĞ¯´ø²ÎÊıÇÒÖµÎª"declearJoinPointExpression()"Âğ£¿£¿£¿
+ä»¥ä¸‹æ³¨è§£éƒ½å¿…é¡»æºå¸¦å‚æ•°ä¸”å€¼ä¸º"declearJoinPointExpression()"å—ï¼Ÿï¼Ÿï¼Ÿ
 
-@Before Ç°ÖÃÍ¨Öª Ä¿±ê·½·¨Ö®Ç°Ö´ĞĞ¡£±»ĞŞÊÎ·½·¨Ğ¯´øJoinPointÀàĞÍ²ÎÊı
-@After ºóÖÃÍ¨Öª£¬Ä¿±ê·½·¨Ö´ĞĞºó·µ»ØÇ°Ö´ĞĞ¡£±»ĞŞÊÎ·½·¨Ğ¯´øJoinPointÀàĞÍ²ÎÊı
-@AfterReturning ·µ»ØÍ¨Öª£¬Ä¿±ê·½·¨Õı³£·µ»ØÊ±Ö´ĞĞ¡£±»ĞŞÊÎ·½·¨Ğ¯´øJoinPointÀàĞÍ²ÎÊıºÍObjectÀàĞÍ²ÎÊı´æ·ÅÄ¿±ê·½·¨·µ»ØÖµ¡£
-@AfterThrowing Ä¿±ê·½·¨Òì³£Ê±Ö´ĞĞ¡£±»ĞŞÊÎ·½·¨Ğ¯´øJoinPointÀàĞÍ²ÎÊıºÍExceptionÀàĞÍ²ÎÊı´æ·ÅÄ¿±ê·½·¨Å×³öµÄÒì³£¡£
-@Around »·ÈÆÍ¨Öª£¬°üº¬Ç°ÖÃ  ºóÖÃ ·µ»Ø Òì³£ £¬±»ĞŞÊÎµÄ·½·¨±ØĞëĞ¯´ø²ÎÊıProceedingJoinPointÀàĞÍµÄ²ÎÊı£¬±ØĞëÓĞ·µ»ØÖµ£¨·µ»ØÄ¿±ê·½·¨µÄ·µ»ØÖµ£©
+@Before å‰ç½®é€šçŸ¥ ç›®æ ‡æ–¹æ³•ä¹‹å‰æ‰§è¡Œã€‚è¢«ä¿®é¥°æ–¹æ³•æºå¸¦JoinPointç±»å‹å‚æ•°
+@After åç½®é€šçŸ¥ï¼Œç›®æ ‡æ–¹æ³•æ‰§è¡Œåè¿”å›å‰æ‰§è¡Œã€‚è¢«ä¿®é¥°æ–¹æ³•æºå¸¦JoinPointç±»å‹å‚æ•°
+@AfterReturning è¿”å›é€šçŸ¥ï¼Œç›®æ ‡æ–¹æ³•æ­£å¸¸è¿”å›æ—¶æ‰§è¡Œã€‚è¢«ä¿®é¥°æ–¹æ³•æºå¸¦JoinPointç±»å‹å‚æ•°å’ŒObjectç±»å‹å‚æ•°å­˜æ”¾ç›®æ ‡æ–¹æ³•è¿”å›å€¼ã€‚
+@AfterThrowing ç›®æ ‡æ–¹æ³•å¼‚å¸¸æ—¶æ‰§è¡Œã€‚è¢«ä¿®é¥°æ–¹æ³•æºå¸¦JoinPointç±»å‹å‚æ•°å’ŒExceptionç±»å‹å‚æ•°å­˜æ”¾ç›®æ ‡æ–¹æ³•æŠ›å‡ºçš„å¼‚å¸¸ã€‚
+@Around ç¯ç»•é€šçŸ¥ï¼ŒåŒ…å«å‰ç½®  åç½® è¿”å› å¼‚å¸¸ ï¼Œè¢«ä¿®é¥°çš„æ–¹æ³•å¿…é¡»æºå¸¦å‚æ•°ProceedingJoinPointç±»å‹çš„å‚æ•°ï¼Œå¿…é¡»æœ‰è¿”å›å€¼ï¼ˆè¿”å›ç›®æ ‡æ–¹æ³•çš„è¿”å›å€¼ï¼‰
 ```
-Àı×Ó£º
+ä¾‹å­ï¼š
 
 ```
 package com.example.aop;
@@ -62,31 +62,31 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-@Aspect    //¸Ã±êÇ©°ÑLoggerAspectÀàÉùÃ÷ÎªÒ»¸öÇĞÃæ
-@Order(1)  //ÉèÖÃÇĞÃæµÄÓÅÏÈ¼¶£ºÈç¹ûÓĞ¶à¸öÇĞÃæ£¬¿ÉÍ¨¹ıÉèÖÃÓÅÏÈ¼¶¿ØÖÆÇĞÃæµÄÖ´ĞĞË³Ğò£¨ÊıÖµÔ½Ğ¡£¬ÓÅÏÈ¼¶Ô½¸ß£©
-@Component //¸Ã±êÇ©°ÑLoggerAspectÀà·Åµ½IOCÈİÆ÷ÖĞ
+@Aspect    //è¯¥æ ‡ç­¾æŠŠLoggerAspectç±»å£°æ˜ä¸ºä¸€ä¸ªåˆ‡é¢
+@Order(1)  //è®¾ç½®åˆ‡é¢çš„ä¼˜å…ˆçº§ï¼šå¦‚æœæœ‰å¤šä¸ªåˆ‡é¢ï¼Œå¯é€šè¿‡è®¾ç½®ä¼˜å…ˆçº§æ§åˆ¶åˆ‡é¢çš„æ‰§è¡Œé¡ºåºï¼ˆæ•°å€¼è¶Šå°ï¼Œä¼˜å…ˆçº§è¶Šé«˜ï¼‰
+@Component //è¯¥æ ‡ç­¾æŠŠLoggerAspectç±»æ”¾åˆ°IOCå®¹å™¨ä¸­
 public class LoggerAspect {
 
     /**
-     * ¶¨ÒåÒ»¸ö·½·¨£¬ÓÃÓÚÉùÃ÷ÇĞÈëµã±í´ïÊ½£¬·½·¨ÖĞÒ»°ã²»ĞèÒªÌí¼ÓÆäËû´úÂë
-     * Ê¹ÓÃ@PointcutÉùÃ÷ÇĞÈëµã±í´ïÊ½
-     * ºóÃæµÄÍ¨ÖªÖ±½ÓÊ¹ÓÃ·½·¨ÃûÀ´ÒıÓÃµ±Ç°µÄÇĞµã±í´ïÊ½£»Èç¹ûÊÇÆäËûÀàÊ¹ÓÃ£¬¼ÓÉÏ°üÃû¼´¿É
+     * å®šä¹‰ä¸€ä¸ªæ–¹æ³•ï¼Œç”¨äºå£°æ˜åˆ‡å…¥ç‚¹è¡¨è¾¾å¼ï¼Œæ–¹æ³•ä¸­ä¸€èˆ¬ä¸éœ€è¦æ·»åŠ å…¶ä»–ä»£ç 
+     * ä½¿ç”¨@Pointcutå£°æ˜åˆ‡å…¥ç‚¹è¡¨è¾¾å¼
+     * åé¢çš„é€šçŸ¥ç›´æ¥ä½¿ç”¨æ–¹æ³•åæ¥å¼•ç”¨å½“å‰çš„åˆ‡ç‚¹è¡¨è¾¾å¼ï¼›å¦‚æœæ˜¯å…¶ä»–ç±»ä½¿ç”¨ï¼ŒåŠ ä¸ŠåŒ…åå³å¯
      */
     @Pointcut("execution(public * com.example.controller.*Controller.*(..))")
     public void declearJoinPointExpression(){}
 
     /**
-     * Ç°ÖÃÍ¨Öª
+     * å‰ç½®é€šçŸ¥
      * @param joinPoint
      */
-    @Before("declearJoinPointExpression()") //¸Ã±êÇ©ÉùÃ÷´Î·½·¨ÊÇÒ»¸öÇ°ÖÃÍ¨Öª£ºÔÚÄ¿±ê·½·¨¿ªÊ¼Ö®Ç°Ö´ĞĞ
+    @Before("declearJoinPointExpression()") //è¯¥æ ‡ç­¾å£°æ˜æ¬¡æ–¹æ³•æ˜¯ä¸€ä¸ªå‰ç½®é€šçŸ¥ï¼šåœ¨ç›®æ ‡æ–¹æ³•å¼€å§‹ä¹‹å‰æ‰§è¡Œ
     public void beforMethod(JoinPoint joinPoint){
         String methodName = joinPoint.getSignature().getName();
         List<Object> args = Arrays.asList(joinPoint.getArgs());
         System.out.println("this method "+methodName+" begin. param<"+ args+">");
     }
     /**
-     * ºóÖÃÍ¨Öª£¨ÎŞÂÛ·½·¨ÊÇ·ñ·¢ÉúÒì³£¶¼»áÖ´ĞĞ,ËùÒÔ·ÃÎÊ²»µ½·½·¨µÄ·µ»ØÖµ£©
+     * åç½®é€šçŸ¥ï¼ˆæ— è®ºæ–¹æ³•æ˜¯å¦å‘ç”Ÿå¼‚å¸¸éƒ½ä¼šæ‰§è¡Œ,æ‰€ä»¥è®¿é—®ä¸åˆ°æ–¹æ³•çš„è¿”å›å€¼ï¼‰
      * @param joinPoint
      */
     @After("declearJoinPointExpression()")
@@ -95,8 +95,8 @@ public class LoggerAspect {
         System.out.println("this method "+methodName+" end.");
     }
     /**
-     * ·µ»ØÍ¨Öª£¨ÔÚ·½·¨Õı³£½áÊøÖ´ĞĞµÄ´úÂë£©
-     * ·µ»ØÍ¨Öª¿ÉÒÔ·ÃÎÊµ½·½·¨µÄ·µ»ØÖµ£¡
+     * è¿”å›é€šçŸ¥ï¼ˆåœ¨æ–¹æ³•æ­£å¸¸ç»“æŸæ‰§è¡Œçš„ä»£ç ï¼‰
+     * è¿”å›é€šçŸ¥å¯ä»¥è®¿é—®åˆ°æ–¹æ³•çš„è¿”å›å€¼ï¼
      * @param joinPoint
      */
     @AfterReturning(value="declearJoinPointExpression()",returning="result")
@@ -105,8 +105,8 @@ public class LoggerAspect {
         System.out.println("this method "+methodName+" end.result<"+result+">");
     }
     /**
-     * Òì³£Í¨Öª£¨·½·¨·¢ÉúÒì³£Ö´ĞĞµÄ´úÂë£©
-     * ¿ÉÒÔ·ÃÎÊµ½Òì³£¶ÔÏó£»ÇÒ¿ÉÒÔÖ¸¶¨ÔÚ³öÏÖÌØ¶¨Òì³£Ê±Ö´ĞĞµÄ´úÂë
+     * å¼‚å¸¸é€šçŸ¥ï¼ˆæ–¹æ³•å‘ç”Ÿå¼‚å¸¸æ‰§è¡Œçš„ä»£ç ï¼‰
+     * å¯ä»¥è®¿é—®åˆ°å¼‚å¸¸å¯¹è±¡ï¼›ä¸”å¯ä»¥æŒ‡å®šåœ¨å‡ºç°ç‰¹å®šå¼‚å¸¸æ—¶æ‰§è¡Œçš„ä»£ç 
      * @param joinPoint
      * @param ex
      */
@@ -116,9 +116,9 @@ public class LoggerAspect {
         System.out.println("this method "+methodName+" end.ex message<"+ex+">");
     }
     /**
-     * »·ÈÆÍ¨Öª(ĞèÒªĞ¯´øÀàĞÍÎªProceedingJoinPointÀàĞÍµÄ²ÎÊı)
-     * »·ÈÆÍ¨Öª°üº¬Ç°ÖÃ¡¢ºóÖÃ¡¢·µ»Ø¡¢Òì³£Í¨Öª£»ProceedingJoinPoin ÀàĞÍµÄ²ÎÊı¿ÉÒÔ¾ö¶¨ÊÇ·ñÖ´ĞĞÄ¿±ê·½·¨
-     * ÇÒ»·ÈÆÍ¨Öª±ØĞëÓĞ·µ»ØÖµ£¬·µ»ØÖµ¼´Ä¿±ê·½·¨µÄ·µ»ØÖµ
+     * ç¯ç»•é€šçŸ¥(éœ€è¦æºå¸¦ç±»å‹ä¸ºProceedingJoinPointç±»å‹çš„å‚æ•°)
+     * ç¯ç»•é€šçŸ¥åŒ…å«å‰ç½®ã€åç½®ã€è¿”å›ã€å¼‚å¸¸é€šçŸ¥ï¼›ProceedingJoinPoin ç±»å‹çš„å‚æ•°å¯ä»¥å†³å®šæ˜¯å¦æ‰§è¡Œç›®æ ‡æ–¹æ³•
+     * ä¸”ç¯ç»•é€šçŸ¥å¿…é¡»æœ‰è¿”å›å€¼ï¼Œè¿”å›å€¼å³ç›®æ ‡æ–¹æ³•çš„è¿”å›å€¼
      * @param point
      */
     @Around(value="declearJoinPointExpression()")
@@ -127,58 +127,58 @@ public class LoggerAspect {
         Object result = null;
         String methodName = point.getSignature().getName();
         try {
-            //Ç°ÖÃÍ¨Öª
+            //å‰ç½®é€šçŸ¥
             System.out.println("The method "+ methodName+" start. param<"+ Arrays.asList(point.getArgs())+">");
-            //Ö´ĞĞÄ¿±ê·½·¨
+            //æ‰§è¡Œç›®æ ‡æ–¹æ³•
             result = point.proceed();
-            //·µ»ØÍ¨Öª
+            //è¿”å›é€šçŸ¥
             System.out.println("The method "+ methodName+" end. result<"+ result+">");
         } catch (Throwable e) {
-            //Òì³£Í¨Öª
+            //å¼‚å¸¸é€šçŸ¥
             System.out.println("this method "+methodName+" end.ex message<"+e+">");
             throw new RuntimeException(e);
         }
-        //ºóÖÃÍ¨Öª
+        //åç½®é€šçŸ¥
         System.out.println("The method "+ methodName+" end.");
         return result;
     }
 }
 ```
-####»ùÓÚXML
-±êÇ©ËµÃ÷£º
+####åŸºäºXML
+æ ‡ç­¾è¯´æ˜ï¼š
 
 ```
-<aop:config> : ÅäÖÃÇĞÃæµÄ¸ù±êÇ©£¬ÊôĞÔproxy-target-class="true"  ¿ÉÒÔÇ¿ÖÆÒªÇóÊ¹ÓÃCGLIB½øĞĞ´úÀí falseÎªjdk´úÀí
-<aop:pointcut>: ÅäÖÃÇĞÈëµã£¬ÊôĞÔid£ºÇĞÈëµã±êÊ¶£¬execution±í´ïÊ½£ºÉêÃ÷¸ÃÇĞÈëµã¹ØÁªµÄÁ¬½Óµã
-<aop:aspect>:Íê³ÉÇĞÃæµÄ¹ØÁªÅäÖÃ£¬ÊôĞÔorder£ºÇĞÃæÓÅÏÈ¼¶£¬ref£ºÇĞÃæÊµ¼ÊµÄÊµÏÖÀàbean
-<aop:before>:ÅäÖÃ¾ßÌåµÄÇ°ÖÃÍ¨Öª£¬ÊôĞÔmethod£ºÇĞÃæÀàÖĞ¶ÔÓ¦µÄ·½·¨Ãû£¬pointcut-ref:ĞèÒª¹ØÁªµÄÇĞÈëµã
-<aop:after>£ºÍ¬ÉÏ
-<aop:after-returning>£ºÍ¬ÉÏ
-<aop:after-throwing>£ºÍ¬ÉÏ
-<aop:around>£ºÍ¬ÉÏ
+<aop:config> : é…ç½®åˆ‡é¢çš„æ ¹æ ‡ç­¾ï¼Œå±æ€§proxy-target-class="true"  å¯ä»¥å¼ºåˆ¶è¦æ±‚ä½¿ç”¨CGLIBè¿›è¡Œä»£ç† falseä¸ºjdkä»£ç†
+<aop:pointcut>: é…ç½®åˆ‡å…¥ç‚¹ï¼Œå±æ€§idï¼šåˆ‡å…¥ç‚¹æ ‡è¯†ï¼Œexecutionè¡¨è¾¾å¼ï¼šç”³æ˜è¯¥åˆ‡å…¥ç‚¹å…³è”çš„è¿æ¥ç‚¹
+<aop:aspect>:å®Œæˆåˆ‡é¢çš„å…³è”é…ç½®ï¼Œå±æ€§orderï¼šåˆ‡é¢ä¼˜å…ˆçº§ï¼Œrefï¼šåˆ‡é¢å®é™…çš„å®ç°ç±»bean
+<aop:before>:é…ç½®å…·ä½“çš„å‰ç½®é€šçŸ¥ï¼Œå±æ€§methodï¼šåˆ‡é¢ç±»ä¸­å¯¹åº”çš„æ–¹æ³•åï¼Œpointcut-ref:éœ€è¦å…³è”çš„åˆ‡å…¥ç‚¹
+<aop:after>ï¼šåŒä¸Š
+<aop:after-returning>ï¼šåŒä¸Š
+<aop:after-throwing>ï¼šåŒä¸Š
+<aop:around>ï¼šåŒä¸Š
 ```
 
-[<aop:aspect>Óë<aop:advisor>µÄÇø±ğ](https://www.jianshu.com/p/40f79da0cdef)
+[<aop:aspect>ä¸<aop:advisor>çš„åŒºåˆ«](https://www.jianshu.com/p/40f79da0cdef)
 
 
-Ê¾Àı£º
+ç¤ºä¾‹ï¼š
 
 ```
-<!-- ÅäÖÃÇĞÃæµÄBean -->
+<!-- é…ç½®åˆ‡é¢çš„Bean -->
     <bean id="sysAspect" class="com.example.aop.SysAspect"/>
-    <!-- ÅäÖÃAOP -->
+    <!-- é…ç½®AOP -->
     <aop:config>
-        <!-- ÅäÖÃÇĞµã±í´ïÊ½  -->
+        <!-- é…ç½®åˆ‡ç‚¹è¡¨è¾¾å¼  -->
         <aop:pointcut id="pointcut" expression="execution(public * com.example.controller.*Controller.*(..))"/>
-        <!-- ÅäÖÃÇĞÃæ¼°ÅäÖÃ -->
+        <!-- é…ç½®åˆ‡é¢åŠé…ç½® -->
         <aop:aspect order="3" ref="sysAspect">
-            <!-- Ç°ÖÃÍ¨Öª -->
+            <!-- å‰ç½®é€šçŸ¥ -->
             <aop:before method="beforMethod"  pointcut-ref="pointcut" />
-            <!-- ºóÖÃÍ¨Öª -->
+            <!-- åç½®é€šçŸ¥ -->
             <aop:after method="afterMethod"  pointcut-ref="pointcut"/>
-            <!-- ·µ»ØÍ¨Öª -->
+            <!-- è¿”å›é€šçŸ¥ -->
             <aop:after-returning method="afterReturnMethod" pointcut-ref="pointcut" returning="result"/>
-            <!-- Òì³£Í¨Öª -->
+            <!-- å¼‚å¸¸é€šçŸ¥ -->
             <aop:after-throwing method="afterThrowingMethod" pointcut-ref="pointcut" throwing="ex"/>
             <aop:around method="aroundMethod" pointcut-ref="pointcut"/>
         </aop:aspect>
@@ -186,9 +186,9 @@ public class LoggerAspect {
 ```
 
 ####tiles
-springmvcÌá¹©µÄÒ»¸öÇ°¶Ë²¼¾Ö¹ÜÀí²å¼ş£¬¶¯Ì¬µÄ×éºÏjspÒ³Ãæ¡£
+springmvcæä¾›çš„ä¸€ä¸ªå‰ç«¯å¸ƒå±€ç®¡ç†æ’ä»¶ï¼ŒåŠ¨æ€çš„ç»„åˆjspé¡µé¢ã€‚
 
-ÒÀÀµ
+ä¾èµ–
 
 ```
 <dependency>
@@ -198,7 +198,7 @@ springmvcÌá¹©µÄÒ»¸öÇ°¶Ë²¼¾Ö¹ÜÀí²å¼ş£¬¶¯Ì¬µÄ×éºÏjspÒ³Ãæ¡£
 </dependency>
 ```
 
-²¼¾ÖÎÄ¼şlayout.xml,¶¨ÒåÄ£°å£¬Ò³Ãæ²¼¾Ö
+å¸ƒå±€æ–‡ä»¶layout.xml,å®šä¹‰æ¨¡æ¿ï¼Œé¡µé¢å¸ƒå±€
 
 ```
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -206,21 +206,21 @@ springmvcÌá¹©µÄÒ»¸öÇ°¶Ë²¼¾Ö¹ÜÀí²å¼ş£¬¶¯Ì¬µÄ×éºÏjspÒ³Ãæ¡£
      "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
      "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-  <!-- Ö÷²¼¾Ö -->
+  <!-- ä¸»å¸ƒå±€ -->
   <definition name="layout" template="/mainLayout.jsp">
   </definition>
-  <!-- Ö÷²¼¾Ö -->
-  <!-- ÏîÄ¿ -->
+  <!-- ä¸»å¸ƒå±€ -->
+  <!-- é¡¹ç›® -->
   <definition name="myView" extends="layout">
     <put-attribute name="a" value="/a.jsp" />
     <put-attribute name="item" expression="/${item}.jsp" />
   </definition>
-  <!--ÏîÄ¿-->
+  <!--é¡¹ç›®-->
 </tiles-definitions>
 ```
 
 
-springMVC-servlet.xmlÖĞÅäÖÃÊÔÍ¼½âÎöÆ÷
+springMVC-servlet.xmlä¸­é…ç½®è¯•å›¾è§£æå™¨
 
 ```
 <bean id="tilesViewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" p:order="1"/>
@@ -233,15 +233,15 @@ springMVC-servlet.xmlÖĞÅäÖÃÊÔÍ¼½âÎöÆ÷
 </bean>
 ```
 
-ÅäºÏ¿ØÖÆÆ÷Ê¹ÓÃ
+é…åˆæ§åˆ¶å™¨ä½¿ç”¨
 
 ```
 public String introductionView(Model model) { 
-    model.addAttribute("item","introduction");//Õâ¸ö¾ÍÊÇ¸ø·µ»ØÖµÌí¼Ó¸öÊôĞÔ£¬ÔÚÒ³Ãæ¿ÉÒÔÖ±½ÓµÃµ½item£¬
-//${item}   ÔÚjspÒ³Ãæ¾Í¿ÉÒÔµÃµ½ºóÌ¨·µ»ØµÄÖµ¡£
-return ¡°myView¡±; //ÕâÀïµÄmyViewÎªlayout.xmlÖĞÅäÖÃµÄÊÓÍ¼Ãû³Æ}
+    model.addAttribute("item","introduction");//è¿™ä¸ªå°±æ˜¯ç»™è¿”å›å€¼æ·»åŠ ä¸ªå±æ€§ï¼Œåœ¨é¡µé¢å¯ä»¥ç›´æ¥å¾—åˆ°itemï¼Œ
+//${item}   åœ¨jspé¡µé¢å°±å¯ä»¥å¾—åˆ°åå°è¿”å›çš„å€¼ã€‚
+return â€œmyViewâ€; //è¿™é‡Œçš„myViewä¸ºlayout.xmlä¸­é…ç½®çš„è§†å›¾åç§°}
 ```
 
-[tiles²Î¿¼×ÊÁÏ](https://www.cnblogs.com/handsome1013/p/6140720.html)
+[tileså‚è€ƒèµ„æ–™](https://www.cnblogs.com/handsome1013/p/6140720.html)
 
 

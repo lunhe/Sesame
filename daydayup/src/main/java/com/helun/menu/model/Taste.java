@@ -1,10 +1,25 @@
 package com.helun.menu.model;
 
-public class Taste {
+import com.helun.menu.enumtype.TasteLevel;
+import com.helun.menu.enumtype.TasteType;
+import com.helun.menu.enumtype.TextureType;
 
+public class Taste {
+	private String tasteId ;
 	private TasteLevel tasteLevel;
 	private TasteType tasteType;
 	private TextureType textureType;
+
+	
+	
+	public String getTasteId() {
+		return tasteId;
+	}
+
+	public Taste setTasteId(String tasteId) {
+		this.tasteId = tasteId;
+		return this;
+	}
 
 	public TasteLevel getTasteLevel() {
 		return tasteLevel;

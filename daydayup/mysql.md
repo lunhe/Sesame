@@ -1,22 +1,22 @@
 ##MySQL
 ###Notes
-Ò»¸öÊý¾ÝÇ¨ÒÆÊ±ºòµÄÓÅ»¯·½°¸
+ä¸€ä¸ªæ•°æ®è¿ç§»æ—¶å€™çš„ä¼˜åŒ–æ–¹æ¡ˆ
 
 ```
-alter tab1 disable keys  ;  --½ûÓÃtab1Ë÷Òý
+alter tab1 disable keys  ;  --ç¦ç”¨tab1ç´¢å¼•
 
-insert into tab1 select * from tab2 ;  --Ïòtab1Ç¨ÒÆÊý¾Ý
+insert into tab1 select * from tab2 ;  --å‘tab1è¿ç§»æ•°æ®
 
-alter tab1 enable keys; -- ¿ªÆôtab1Ë÷Òý
+alter tab1 enable keys; -- å¼€å¯tab1ç´¢å¼•
 ```
 
 executable comments
 
-ÀïÃæµÄ±äÁ¿¸³ÖµÓï¾äÊÇ»á±»Ö´ÐÐµÄ¡£
+é‡Œé¢çš„å˜é‡èµ‹å€¼è¯­å¥æ˜¯ä¼šè¢«æ‰§è¡Œçš„ã€‚
 
-ÎªÊ²Ã´Òª°ÑÃüÁîÐ´ÔÚ×¢ÊÍÀïÃæÄØ£¿ ÒòÎªµ¼³ö½Å±¾ÓÐÐ©Ê±ºò¿ÉÄÜ»áÄÃµ½ÆäËûÊý¾Ý¿âÉÏÈ¥Ö´ÐÐ¡£
+ä¸ºä»€ä¹ˆè¦æŠŠå‘½ä»¤å†™åœ¨æ³¨é‡Šé‡Œé¢å‘¢ï¼Ÿ å› ä¸ºå¯¼å‡ºè„šæœ¬æœ‰äº›æ—¶å€™å¯èƒ½ä¼šæ‹¿åˆ°å…¶ä»–æ•°æ®åº“ä¸ŠåŽ»æ‰§è¡Œã€‚
 
-40101£¬ÊÇÖ¸ÔÚMySQL 4.1.1£¨4.01.01£©¼°ÒÔÉÏ°æ±¾ÉÏÖ´ÐÐ¡£
+40101ï¼Œæ˜¯æŒ‡åœ¨MySQL 4.1.1ï¼ˆ4.01.01ï¼‰åŠä»¥ä¸Šç‰ˆæœ¬ä¸Šæ‰§è¡Œã€‚
 
 ```
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -25,108 +25,108 @@ executable comments
 /*!40101 SET NAMES utf8mb4 */;
 ```
 
-innodbÓëmyisam
+innodbä¸Žmyisam
 --
-[ÏêÏ¸½éÉÜ](https://www.cnblogs.com/y-rong/p/8110596.html)
+[è¯¦ç»†ä»‹ç»](https://www.cnblogs.com/y-rong/p/8110596.html)
 
-¹Ø¼ü×ÖÌáÊ¾
+å…³é”®å­—æç¤º
 myisam:
 
 ```
-Ä¬ÈÏÀàÐÍ   ÊÊºÏÖ´ÐÐ´óÁ¿select  Ã»ÓÐÊÂÎñ  ²»Ö§³ÖÍâ¼ü    ±í¼¶Ëø£¨ËùÓÐ²Ù×÷Ö±½ÓËø±í£©  
-¶Ñ±í£¨Èý¸öÎÄ¼þ£¬±íÃû¿ªÍ· £¬frm´æ·Å±í½á¹¹£¬MYD´æ·ÅÊý¾Ý£¬MYI´æ·ÅË÷Òý£©  
-¾²Ì¬±í  ¶¯Ì¬±í  Ñ¹Ëõ±í  
-×ÔÔö×Ö¶Î±ØÐëÎªË÷Òý  ×éºÏË÷Òý¿ÉÒÔ²»ÔÚµÚÒ»ÁÐ   ÔÊÐí´æÔÚÎÞË÷ÒýÎÞÖ÷¼ü±í    ´æ
-ÓÐ×ÜÐÐÊý¼ÇÂ¼£¬countÐ§ÂÊ¸ß   Ö§³ÖFULLTEXTµÄÈ«ÎÄË÷Òý£¨£¿£¿£©  
+é»˜è®¤ç±»åž‹   é€‚åˆæ‰§è¡Œå¤§é‡select  æ²¡æœ‰äº‹åŠ¡  ä¸æ”¯æŒå¤–é”®    è¡¨çº§é”ï¼ˆæ‰€æœ‰æ“ä½œç›´æŽ¥é”è¡¨ï¼‰  
+å †è¡¨ï¼ˆä¸‰ä¸ªæ–‡ä»¶ï¼Œè¡¨åå¼€å¤´ ï¼Œfrmå­˜æ”¾è¡¨ç»“æž„ï¼ŒMYDå­˜æ”¾æ•°æ®ï¼ŒMYIå­˜æ”¾ç´¢å¼•ï¼‰  
+é™æ€è¡¨  åŠ¨æ€è¡¨  åŽ‹ç¼©è¡¨  
+è‡ªå¢žå­—æ®µå¿…é¡»ä¸ºç´¢å¼•  ç»„åˆç´¢å¼•å¯ä»¥ä¸åœ¨ç¬¬ä¸€åˆ—   å…è®¸å­˜åœ¨æ— ç´¢å¼•æ— ä¸»é”®è¡¨    å­˜
+æœ‰æ€»è¡Œæ•°è®°å½•ï¼Œcountæ•ˆçŽ‡é«˜   æ”¯æŒFULLTEXTçš„å…¨æ–‡ç´¢å¼•ï¼ˆï¼Ÿï¼Ÿï¼‰  
 ```
 innodb:
 
 ```
-ÊÊºÏ²¢·¢  insert  update  delete Ö§³ÖÊÂÎñ  Ö§³ÖÍâ¼ü  Ö§³ÖÐÐËø£¨Ä£ºýµÄsql»áÍË»¯Îª±íËø£©
-Ë÷Òý×éÖ¯±í   ¹²Ïí±í¿Õ¼ä   ¶à±í¿Õ¼ä´æ´¢  frmÎÄ¼þ´æ´¢±í½á¹¹   Ë÷ÒýºÍÊý¾Ý´æ´¢ÔÚÒ»Æð  idbÎÄ¼þ   
-×ÔÔö×Ö¶Î±ØÐëÊÇË÷Òý   ×éºÏË÷ÒýÊ±×ÔÔö±ØÐëÔÚµÚÒ»ÁÐ
-Èç¹ûÃ»ÓÐ´´½¨Ö÷¼ü»òÎ¨Ò»·Ç¿ÕË÷Òý  »á×Ô¶¯Éú³É6×Ö½ÚµÄÖ÷¼ü£¨ÓÃ»§²»¿É¼û£©
-²»¼ÇÂ¼×ÜÐÐÊý  countÏûºÄºÜ´ó  ²»Ö§³ÖFULLTEXTµÄÈ«ÎÄË÷Òý£¬¿ÉÒÔÊ¹ÓÃsphinx²å¼þÖ§³Ö£¨£¿£¿£©
+é€‚åˆå¹¶å‘  insert  update  delete æ”¯æŒäº‹åŠ¡  æ”¯æŒå¤–é”®  æ”¯æŒè¡Œé”ï¼ˆæ¨¡ç³Šçš„sqlä¼šé€€åŒ–ä¸ºè¡¨é”ï¼‰
+ç´¢å¼•ç»„ç»‡è¡¨   å…±äº«è¡¨ç©ºé—´   å¤šè¡¨ç©ºé—´å­˜å‚¨  frmæ–‡ä»¶å­˜å‚¨è¡¨ç»“æž„   ç´¢å¼•å’Œæ•°æ®å­˜å‚¨åœ¨ä¸€èµ·  idbæ–‡ä»¶   
+è‡ªå¢žå­—æ®µå¿…é¡»æ˜¯ç´¢å¼•   ç»„åˆç´¢å¼•æ—¶è‡ªå¢žå¿…é¡»åœ¨ç¬¬ä¸€åˆ—
+å¦‚æžœæ²¡æœ‰åˆ›å»ºä¸»é”®æˆ–å”¯ä¸€éžç©ºç´¢å¼•  ä¼šè‡ªåŠ¨ç”Ÿæˆ6å­—èŠ‚çš„ä¸»é”®ï¼ˆç”¨æˆ·ä¸å¯è§ï¼‰
+ä¸è®°å½•æ€»è¡Œæ•°  countæ¶ˆè€—å¾ˆå¤§  ä¸æ”¯æŒFULLTEXTçš„å…¨æ–‡ç´¢å¼•ï¼Œå¯ä»¥ä½¿ç”¨sphinxæ’ä»¶æ”¯æŒï¼ˆï¼Ÿï¼Ÿï¼‰
 ```
 
-innodbÊÂÎñ£º
+innodbäº‹åŠ¡ï¼š
 
 ```
-ÊÂÎñ¸ôÀë¼¶±ð£ºÎ´Ìá½»¶Á(Read uncommitted)£¬ÒÑÌá½»¶Á(Read committed)£¬¿ÉÖØ¸´¶Á(Repeatable read)£¬¿ÉÐòÁÐ»¯(Serializable)
+äº‹åŠ¡éš”ç¦»çº§åˆ«ï¼šæœªæäº¤è¯»(Read uncommitted)ï¼Œå·²æäº¤è¯»(Read committed)ï¼Œå¯é‡å¤è¯»(Repeatable read)ï¼Œå¯åºåˆ—åŒ–(Serializable)
 
 
-InnodbµÄÐÐËøÄ£Ê½ÓÐÒÔÏÂ¼¸ÖÖ£º¹²ÏíËø£¬ÅÅËûËø£¬ÒâÏò¹²ÏíËø(±íËø)£¬ÒâÏòÅÅËûËø(±íËø)£¬¼äÏ¶Ëø¡£
+Innodbçš„è¡Œé”æ¨¡å¼æœ‰ä»¥ä¸‹å‡ ç§ï¼šå…±äº«é”ï¼ŒæŽ’ä»–é”ï¼Œæ„å‘å…±äº«é”(è¡¨é”)ï¼Œæ„å‘æŽ’ä»–é”(è¡¨é”)ï¼Œé—´éš™é”ã€‚
 
-×¢Òâ£ºµ±Óï¾äÃ»ÓÐÊ¹ÓÃË÷Òý£¬innodb²»ÄÜÈ·¶¨²Ù×÷µÄÐÐ£¬Õâ¸öÊ±ºò¾ÍÊ¹ÓÃµÄÒâÏòËø£¬Ò²¾ÍÊÇ±íËø
+æ³¨æ„ï¼šå½“è¯­å¥æ²¡æœ‰ä½¿ç”¨ç´¢å¼•ï¼Œinnodbä¸èƒ½ç¡®å®šæ“ä½œçš„è¡Œï¼Œè¿™ä¸ªæ—¶å€™å°±ä½¿ç”¨çš„æ„å‘é”ï¼Œä¹Ÿå°±æ˜¯è¡¨é”
 ```
 
-¿ª·¢µÄ×¢ÒâÊÂÏî£º
+å¼€å‘çš„æ³¨æ„äº‹é¡¹ï¼š
 
 ```
-1¡¢¿ÉÒÔÓÃ show create table tablename ÃüÁî¿´±íµÄÒýÇæÀàÐÍ¡£
+1ã€å¯ä»¥ç”¨ show create table tablename å‘½ä»¤çœ‹è¡¨çš„å¼•æ“Žç±»åž‹ã€‚
 
-2¡¢¶Ô²»Ö§³ÖÊÂÎñµÄ±í×östart/commit²Ù×÷Ã»ÓÐÈÎºÎÐ§¹û£¬ÔÚÖ´ÐÐcommitÇ°ÒÑ¾­Ìá½»¡£
+2ã€å¯¹ä¸æ”¯æŒäº‹åŠ¡çš„è¡¨åšstart/commitæ“ä½œæ²¡æœ‰ä»»ä½•æ•ˆæžœï¼Œåœ¨æ‰§è¡Œcommitå‰å·²ç»æäº¤ã€‚
 
-3¡¢¿ÉÒÔÖ´ÐÐÒÔÏÂÃüÁîÀ´ÇÐ»»·ÇÊÂÎñ±íµ½ÊÂÎñ£¨Êý¾Ý²»»á¶ªÊ§£©£¬innodb±í±Èmyisam±í¸ü°²È«£ºalter table tablename type=innodb;»òÕßÊ¹ÓÃ alter table tablename engine = innodb;
+3ã€å¯ä»¥æ‰§è¡Œä»¥ä¸‹å‘½ä»¤æ¥åˆ‡æ¢éžäº‹åŠ¡è¡¨åˆ°äº‹åŠ¡ï¼ˆæ•°æ®ä¸ä¼šä¸¢å¤±ï¼‰ï¼Œinnodbè¡¨æ¯”myisamè¡¨æ›´å®‰å…¨ï¼šalter table tablename type=innodb;æˆ–è€…ä½¿ç”¨ alter table tablename engine = innodb;
 
-4¡¢Ä¬ÈÏinnodbÊÇ¿ªÆô×Ô¶¯Ìá½»µÄ£¬Èç¹ûÄã°´ÕÕmyisamµÄÊ¹ÓÃ·½·¨À´±àÐ´´úÂëÒ³²»»á´æÔÚ´íÎó£¬Ö»ÊÇÐÔÄÜ»áºÜµÍ¡£
+4ã€é»˜è®¤innodbæ˜¯å¼€å¯è‡ªåŠ¨æäº¤çš„ï¼Œå¦‚æžœä½ æŒ‰ç…§myisamçš„ä½¿ç”¨æ–¹æ³•æ¥ç¼–å†™ä»£ç é¡µä¸ä¼šå­˜åœ¨é”™è¯¯ï¼Œåªæ˜¯æ€§èƒ½ä¼šå¾ˆä½Žã€‚
 
-ÈçºÎÔÚ±àÐ´´úÂëÊ±ºòÌá¸ßÊý¾Ý¿âÐÔÄÜ£º
+å¦‚ä½•åœ¨ç¼–å†™ä»£ç æ—¶å€™æé«˜æ•°æ®åº“æ€§èƒ½ï¼š
 
-	a¡¢¾¡Á¿½«¶à¸öÓï¾ä°óµ½Ò»¸öÊÂÎñÖÐ£¬½øÐÐÌá½»£¬±ÜÃâ¶à´ÎÌá½»µ¼ÖÂµÄÊý¾Ý¿â¿ªÏú¡£
+	aã€å°½é‡å°†å¤šä¸ªè¯­å¥ç»‘åˆ°ä¸€ä¸ªäº‹åŠ¡ä¸­ï¼Œè¿›è¡Œæäº¤ï¼Œé¿å…å¤šæ¬¡æäº¤å¯¼è‡´çš„æ•°æ®åº“å¼€é”€ã€‚
 
-	b¡¢ÔÚÒ»¸öÊÂÎñ»ñµÃÅÅËûËø»òÕßÒâÏòÅÅËûËøÒÔºó£¬Èç¹ûºóÃæ»¹ÓÐÐèÒª´¦ÀíµÄsqlÓï¾ä£¬ÔÚÕâÁ½Ìõ»òÕß¶àÌõsqlÓï¾äÖ®¼ä³ÌÐòÓ¦¾¡Á¿ÉÙµÄ½øÐÐÂß¼­ÔËËãºÍ´¦Àí£¬¼õÉÙËøµÄÊ±¼ä¡£
+	bã€åœ¨ä¸€ä¸ªäº‹åŠ¡èŽ·å¾—æŽ’ä»–é”æˆ–è€…æ„å‘æŽ’ä»–é”ä»¥åŽï¼Œå¦‚æžœåŽé¢è¿˜æœ‰éœ€è¦å¤„ç†çš„sqlè¯­å¥ï¼Œåœ¨è¿™ä¸¤æ¡æˆ–è€…å¤šæ¡sqlè¯­å¥ä¹‹é—´ç¨‹åºåº”å°½é‡å°‘çš„è¿›è¡Œé€»è¾‘è¿ç®—å’Œå¤„ç†ï¼Œå‡å°‘é”çš„æ—¶é—´ã€‚
 
-	c¡¢¾¡Á¿±ÜÃâËÀËø
+	cã€å°½é‡é¿å…æ­»é”
 
-	d¡¢sqlÓï¾äÈç¹ûÓÐwhere×Ó¾äÒ»¶¨ÒªÊ¹ÓÃË÷Òý£¬¾¡Á¿±ÜÃâ»ñÈ¡ÒâÏòÅÅËûËø¡£(???)
+	dã€sqlè¯­å¥å¦‚æžœæœ‰whereå­å¥ä¸€å®šè¦ä½¿ç”¨ç´¢å¼•ï¼Œå°½é‡é¿å…èŽ·å–æ„å‘æŽ’ä»–é”ã€‚(???)
 
-	(???)f¡¢Õë¶ÔÎÒÃÇ×Ô¼ºµÄÊý¾Ý¿â»·¾³£¬ÈÕÖ¾ÏµÍ³ÊÇÖ±²åÈë£¬²»ÐÞ¸ÄµÄ£¬ËùÒÔÎÒÃÇÊ¹ÓÃ»ìºÏÒýÇæ·½Ê½£¬ZION_LOG_DBÕÕ¾ÉÊ¹ÓÃmyisam´æ´¢ÒýÇæ£¬Ö»ÓÐZION_GAME_DB£¬ZION_LOGIN_DB£¬DAUM_BILLINGÊ¹ÓÃInnodbÒýÇæ¡£
+	(???)fã€é’ˆå¯¹æˆ‘ä»¬è‡ªå·±çš„æ•°æ®åº“çŽ¯å¢ƒï¼Œæ—¥å¿—ç³»ç»Ÿæ˜¯ç›´æ’å…¥ï¼Œä¸ä¿®æ”¹çš„ï¼Œæ‰€ä»¥æˆ‘ä»¬ä½¿ç”¨æ··åˆå¼•æ“Žæ–¹å¼ï¼ŒZION_LOG_DBç…§æ—§ä½¿ç”¨myisamå­˜å‚¨å¼•æ“Žï¼Œåªæœ‰ZION_GAME_DBï¼ŒZION_LOGIN_DBï¼ŒDAUM_BILLINGä½¿ç”¨Innodbå¼•æ“Žã€‚
 ```
 
 dual
 
 ```
-dual ÊÇoracleÖÐÎªÁËÂú×ã select¡­¡­from¡­¡­µÄ½á¹¹ÉèÖÃµÄ¹Ø¼ü×Ö£¬ÔÙmysqlºÍsqlserverÖÐÖ§³Öselect 1 ÕâÖÐÎÞfromµÄÓï·¨¡£×¢Òâ£ºselect * from dualÔÚmysqlÖÐ±¨´í£¬ÔÚoracle»á·µ»ØÒ»ÐÐÄ¬ÈÏµÄÊý¾Ý
+dual æ˜¯oracleä¸­ä¸ºäº†æ»¡è¶³ selectâ€¦â€¦fromâ€¦â€¦çš„ç»“æž„è®¾ç½®çš„å…³é”®å­—ï¼Œå†mysqlå’Œsqlserverä¸­æ”¯æŒselect 1 è¿™ä¸­æ— fromçš„è¯­æ³•ã€‚æ³¨æ„ï¼šselect * from dualåœ¨mysqlä¸­æŠ¥é”™ï¼Œåœ¨oracleä¼šè¿”å›žä¸€è¡Œé»˜è®¤çš„æ•°æ®
 ```
 
 ```
-using BTREE : Ê¹ÓÃÔÚË÷ÒýÉÏ£¬Ö¸Ã÷Ë÷ÒýµÄÊý¾Ý½á¹¹£¨Í¨³£Ë÷ÒýÎªBTREE»òÕßHASH£©  BTREEÊÇMYISAMºÍInnoDBÎ¨Ò»Ö§³ÖµÄÊý¾Ý½á¹¹£¬MEMORYºÍHEAP´æ´¢ÒýÇæ¿ÉÒÔÖ§³ÖHASHºÍBTREEË÷Òý
+using BTREE : ä½¿ç”¨åœ¨ç´¢å¼•ä¸Šï¼ŒæŒ‡æ˜Žç´¢å¼•çš„æ•°æ®ç»“æž„ï¼ˆé€šå¸¸ç´¢å¼•ä¸ºBTREEæˆ–è€…HASHï¼‰  BTREEæ˜¯MYISAMå’ŒInnoDBå”¯ä¸€æ”¯æŒçš„æ•°æ®ç»“æž„ï¼ŒMEMORYå’ŒHEAPå­˜å‚¨å¼•æ“Žå¯ä»¥æ”¯æŒHASHå’ŒBTREEç´¢å¼•
 
-SET SQL_SAFE_UPDATES = 0 £º¹Ø±ÕÊý¾Ý¿â°²È«Ä£Ê½
+SET SQL_SAFE_UPDATES = 0 ï¼šå…³é—­æ•°æ®åº“å®‰å…¨æ¨¡å¼
 ```
 
 binlog
 
 ```
-binlog£º ¶þ½øÖÆÎÄ¼þ£¬°üÀ¨Ë÷ÒýÎÄ¼þºÍÈÕÖ¾ÎÄ¼þ¡£Ë÷ÒýÎÄ¼þÓÃÓÚ¼ÇÂ¼ÄÄÐ©ÈÕÖ¾ÎÄ¼þÕýÔÚ±»Ê¹ÓÃ£¬ÈÕÖ¾ÎÄ¼þ¼ÇÂ¼Êý¾Ý¿âµÄDDL£¬DML¡£
-binlog£º²»ÊÇinnodb¶ÀÓÐ£¬»ùÓÚÒ»¸ö¸öÊÂ¼þ¼ÇÂ¼ÈÕÖ¾£¬
-binlog£ºÊý¾Ý»Ö¸´£¬Êý¾Ý±¸·Ý£¬Éó¼ÆÊÇ·ñÓÐ¹¥»÷ÐÐÎª
-binlog£º	binlog³£¼û¸ñÊ½ ³£ÓÃrow¸ñÊ½£¬×¼È·¼ÇÂ¼Ã¿ÐÐ±ä»¯µÄÊý¾Ý£¬
-		Ê¹ÓÃmysqlbinlog -vv(¸ñÊ½ÎªrowÊ±ÐèÒª)²é¿´binlog£¬
-		É¾³ýbinlog£ºreset master£¨É¾³ýËùÓÐÈÕÖ¾£©£¬PURGE { BINARY | MASTER } LOGS { TO 'log_name' | BEFORE datetime_expr }É¾³ý·ûºÏÌõ¼þµÄÈÕÖ¾£¬ÉèÖÃÈÕÖ¾¹ýÆÚ²ÎÊý£ºexpire_logs_days=N¡£
-		³£¼û²ÎÊý£º
+binlogï¼š äºŒè¿›åˆ¶æ–‡ä»¶ï¼ŒåŒ…æ‹¬ç´¢å¼•æ–‡ä»¶å’Œæ—¥å¿—æ–‡ä»¶ã€‚ç´¢å¼•æ–‡ä»¶ç”¨äºŽè®°å½•å“ªäº›æ—¥å¿—æ–‡ä»¶æ­£åœ¨è¢«ä½¿ç”¨ï¼Œæ—¥å¿—æ–‡ä»¶è®°å½•æ•°æ®åº“çš„DDLï¼ŒDMLã€‚
+binlogï¼šä¸æ˜¯innodbç‹¬æœ‰ï¼ŒåŸºäºŽä¸€ä¸ªä¸ªäº‹ä»¶è®°å½•æ—¥å¿—ï¼Œ
+binlogï¼šæ•°æ®æ¢å¤ï¼Œæ•°æ®å¤‡ä»½ï¼Œå®¡è®¡æ˜¯å¦æœ‰æ”»å‡»è¡Œä¸º
+binlogï¼š	binlogå¸¸è§æ ¼å¼ å¸¸ç”¨rowæ ¼å¼ï¼Œå‡†ç¡®è®°å½•æ¯è¡Œå˜åŒ–çš„æ•°æ®ï¼Œ
+		ä½¿ç”¨mysqlbinlog -vv(æ ¼å¼ä¸ºrowæ—¶éœ€è¦)æŸ¥çœ‹binlogï¼Œ
+		åˆ é™¤binlogï¼šreset masterï¼ˆåˆ é™¤æ‰€æœ‰æ—¥å¿—ï¼‰ï¼ŒPURGE { BINARY | MASTER } LOGS { TO 'log_name' | BEFORE datetime_expr }åˆ é™¤ç¬¦åˆæ¡ä»¶çš„æ—¥å¿—ï¼Œè®¾ç½®æ—¥å¿—è¿‡æœŸå‚æ•°ï¼šexpire_logs_days=Nã€‚
+		å¸¸è§å‚æ•°ï¼š
 
 log_bin = {on | off | base_name}
-Ö¸¶¨ÊÇ·ñÆôÓÃ¼ÇÂ¼¶þ½øÖÆÈÕÖ¾»òÕßÖ¸¶¨Ò»¸öÈÕÖ¾Â·¾¶
+æŒ‡å®šæ˜¯å¦å¯ç”¨è®°å½•äºŒè¿›åˆ¶æ—¥å¿—æˆ–è€…æŒ‡å®šä¸€ä¸ªæ—¥å¿—è·¯å¾„
 sql_log_bin ={ on | off }
-Ö¸¶¨ÊÇ·ñÆôÓÃ¼ÇÂ¼¶þ½øÖÆÈÕÖ¾
+æŒ‡å®šæ˜¯å¦å¯ç”¨è®°å½•äºŒè¿›åˆ¶æ—¥å¿—
 expire_logs_days
-Ö¸¶¨×Ô¶¯É¾³ý¶þ½øÖÆÈÕÖ¾µÄÊ±¼ä£¬¼´ÈÕÖ¾¹ýÆÚÊ±¼ä
+æŒ‡å®šè‡ªåŠ¨åˆ é™¤äºŒè¿›åˆ¶æ—¥å¿—çš„æ—¶é—´ï¼Œå³æ—¥å¿—è¿‡æœŸæ—¶é—´
 log_bin_index
-Ö¸¶¨mysql-bin.indexÎÄ¼þµÄÂ·¾¶
+æŒ‡å®šmysql-bin.indexæ–‡ä»¶çš„è·¯å¾„
 binlog_format = { mixed | row | statement }
-Ö¸¶¨¶þ½øÖÆÈÕÖ¾»ùÓÚÊ²Ã´Ä£Ê½¼ÇÂ¼
+æŒ‡å®šäºŒè¿›åˆ¶æ—¥å¿—åŸºäºŽä»€ä¹ˆæ¨¡å¼è®°å½•
 max_binlog_size
-Ö¸¶¨¶þ½øÖÆÈÕÖ¾ÎÄ¼þ×î´óÖµ
+æŒ‡å®šäºŒè¿›åˆ¶æ—¥å¿—æ–‡ä»¶æœ€å¤§å€¼
 binlog_cache_size
-Ö¸¶¨ÊÂÎñÈÕÖ¾»º´æÇø´óÐ¡
+æŒ‡å®šäº‹åŠ¡æ—¥å¿—ç¼“å­˜åŒºå¤§å°
 max_binlog_cache_size
-Ö¸¶¨¶þ½øÖÆÈÕÖ¾»º´æ×î´ó´óÐ¡
+æŒ‡å®šäºŒè¿›åˆ¶æ—¥å¿—ç¼“å­˜æœ€å¤§å¤§å°
 sync_binlog = { 0 | n }
-Ö¸¶¨Ð´»º³å¶àÉÙ´Î£¬Ë¢Ò»´ÎÅÌ
+æŒ‡å®šå†™ç¼“å†²å¤šå°‘æ¬¡ï¼Œåˆ·ä¸€æ¬¡ç›˜
 
-ÓÃÓÚ½âÎöbinlogµÄjar£ºmysql-binlog-connector-java»òÕßopen-replicator
+ç”¨äºŽè§£æžbinlogçš„jarï¼šmysql-binlog-connector-javaæˆ–è€…open-replicator
 ```
 [binlog1](https://www.cnblogs.com/rjzheng/p/9721765.html)
 [binlog2](https://www.cnblogs.com/rjzheng/p/9745551.html)

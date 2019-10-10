@@ -1,10 +1,12 @@
 package com.helun.menu.model;
 
+import com.helun.menu.enumtype.MenuType;
+
 public class Menu {
 	/**
 	 * 编号
 	 */
-	private Integer id;
+	private String menuId;
 	/**
 	 * 菜名
 	 */
@@ -22,7 +24,7 @@ public class Menu {
 	/**
 	 * 味道
 	 */
-	private Taste taste;
+	private String tasteId;
 	
 }
  

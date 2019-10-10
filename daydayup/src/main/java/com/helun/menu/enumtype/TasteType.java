@@ -1,4 +1,4 @@
-package com.helun.menu.model;
+package com.helun.menu.enumtype;
 
 public enum TasteType {
 	/**

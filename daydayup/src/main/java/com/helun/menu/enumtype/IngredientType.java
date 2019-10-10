@@ -1,4 +1,4 @@
-package com.helun.menu.model;
+package com.helun.menu.enumtype;
 
 /**
  * 食材类型
