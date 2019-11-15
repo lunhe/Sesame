@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import com.helun.menu.enumtype.IngredientType;
 import com.helun.menu.enumtype.SolaTerms;
 
-public class Ingredient {
+public class Ingredient extends BaseEntity{
 
 	/**
 	 * 编号
@@ -141,11 +141,6 @@ public class Ingredient {
 	public Ingredient setSugar(Float sugar) {
 		this.sugar = sugar;
 		return this;
-	}
-
-	public String toString() {
-		return "[name:" + name + ",price:" + price + ",solaTerms:" + solaTerms + ",locatoin:" + location + ",type:"
-				+ type + ",fat:" + fat + ",fibre:" + fibre + ",protein:" + protein + ",sugar:" + sugar + "]";
 	}
 
 }

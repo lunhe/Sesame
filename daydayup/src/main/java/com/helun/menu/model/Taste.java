@@ -4,7 +4,8 @@ import com.helun.menu.enumtype.TasteLevel;
 import com.helun.menu.enumtype.TasteType;
 import com.helun.menu.enumtype.TextureType;
 
-public class Taste {
+public class Taste  extends BaseEntity
+{
 	private String tasteId ;
 	private TasteLevel tasteLevel;
 	private TasteType tasteType;

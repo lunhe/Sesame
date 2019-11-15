@@ -19,7 +19,7 @@ crypto	加密算法
 database 数据库驱动
 debug	？
 encoding	json  xml  base64
-flag	？
+flag	实现了命令行参数的解析。
 fmt		格式化
 go		go语言的词法，词法树。类型
 html	html转义以及模板
@@ -490,10 +490,134 @@ for key,val := range map/channel/slice {} //值得注意的是val始终是后面
 
 ```
 
+switch case fallthrough  default
+
+```
+case 之间是独立的代码块，执行完一个case不会继续执行下一个case，因此go的case不需要break跳出
+case允许有一个default,case的表达式中可以是字符串，数值，Boolean，计算表达式，条件表达式（此时switch中不需要条件）
+为了兼容c的代码，设计了一个fallthrough，在case末尾加上fallthrough可是使得继续执行下一个case
+
+package main
+
+import(
+	"fmt"
+)
+
+func main(){
+	var a string = "a"
+	fmt.Println(a)
+	switch a {
+	case "a" :
+		fmt.Println("aaa")
+	case "b" :
+		fmt.Println("bbb1")
+		fmt.Println("bbb2")
+		fmt.Println("bbb3")
+		fallthrough
+	case "c" :
+		fmt.Println("ccc")
+	default:
+		fmt.Println("ddd")
+	}
+	a= "b"
+	switch  {
+	case a == "a" :
+		fmt.Println("aaa")
+	case a == "b" :
+		fmt.Println("bbb1")
+		fmt.Println("bbb2")
+		fmt.Println("bbb3")
+		fallthrough
+	case a == "c" :
+		fmt.Println("ccc")
+	default:
+		fmt.Println("ddd")
+	}
+}
+
+```
+
+select case 
+
+```
+作用类似于switch。但是专用对channel的分流处理
+package main
+
+import (
+	"fmt"
+)
+
+func main(){
+
+	chan1 := make(chan int , 1)
+	chan2 := make(chan int , 1)
+	
+	chan1 <- 2
+	chan2 <- 5
+	
+	select {
+	case <-chann1:
+		fmt.Println(<-chann1)
+	case <-channl:
+		fmt.Println(<-channl2)
+	}
+}
 
 
+```
+
+goto label：
+
+```
+eg：
+package main
+import(
+	"fmt"
+)
+
+func main (){
+	var a string = "aaa"
+	b := 1
+	c := false
+	breakPoint:
+	c = !c
+	fmt.Println(c)
+	if(c){
+		goto breakPoint
+	}else{
+		goto breakPoint2
+	}
 
 
+breakPoint2:
+	fmt.Println(a,b)
+	fmt.Println("breakPoint2")
+}
+}
+
+```
+
+break label
+
+```
+break 当前循环
+break 后加标签，则退出标签标识的循环，break对应的标签只能定义在for  switch   select 代码上
+```
+
+continue label
+
+```
+continue 当前循环
+continue 后加标签继，则续到标记点循环
+```
+
+同步
+
+```
+1 使用锁 ，没有实践
+2 使用channel
+3 使用sync.waitGroup : 类似countdownlatch，一个计数器
+```
 
 
 

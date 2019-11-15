@@ -2,7 +2,7 @@ package com.helun.menu.model;
 
 import com.helun.menu.enumtype.MenuType;
 
-public class Menu {
+public class Menu  extends BaseEntity{
 	/**
 	 * 编号
 	 */
