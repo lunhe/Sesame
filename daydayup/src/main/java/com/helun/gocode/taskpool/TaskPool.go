@@ -1,6 +1,6 @@
 package taskpool
 
-import(
+import (
 	"../syncmap"
 )
 
@@ -9,14 +9,20 @@ const mIN_WORKER_NUM  = 1
 
 type TaskPool struct {
 	EntryChannel chan *Task
+	defaultWorker int
 	workerNum int
 	jobsChannel chan *Task
 	workerStatus syncmap.ConcurrentMap
 	currentTaskStop syncmap.ConcurrentMap
+	workerCount *int32
 	isRunning bool
 }
-
-func NewTaskPool(workerNum int,cacheSize int) *TaskPool{
+/*
+	defaultWorker = workerNum/2
+	jobsChannel  = workerNum*2
+	cacheSize = workerNum*(2-4)
+ */
+func NewTaskPool(defaultWorker int ,workerNum int,cacheSize int) *TaskPool{
 	defer finally()
 	if workerNum < mIN_WORKER_NUM{
 		workerNum = mIN_WORKER_NUM
@@ -24,12 +30,17 @@ func NewTaskPool(workerNum int,cacheSize int) *TaskPool{
 	if cacheSize < mIN_CACHE_SIZE {
 		cacheSize = mIN_CACHE_SIZE
 	}
+	if defaultWorker == 0 {
+		defaultWorker = workerNum/2
+	}
 	taskPool := TaskPool{
 		EntryChannel: make(chan *Task,cacheSize),
+		defaultWorker: defaultWorker,
 		workerNum:    workerNum,
 		jobsChannel:   make(chan *Task,2*workerNum),
 		workerStatus : syncmap.New(),
 		currentTaskStop:syncmap.New(),
+		workerCount:new(int32),
 		isRunning : true,
 	}
 	go taskPool.goManager()
@@ -39,7 +50,8 @@ func NewTaskPool(workerNum int,cacheSize int) *TaskPool{
 func ( taskPool *TaskPool) AddTask(task *Task){
 	defer finally()
 	if taskPool.isRunning {
-		if 	taskPool.getWorkerNum() == 0{
+		workerNum,_ := taskPool.getWorkerNum()
+		if 	workerNum == 0{
 			taskPool.workerFactory(1)
 		}
 		taskPool.EntryChannel <- task
@@ -59,7 +71,7 @@ func (taskPool *TaskPool) Close(isSync bool){
 
 func (taskPool *TaskPool) Start(){
 	defer finally()
-	taskPool.dealTask()
+	go taskPool.dealTask()
 }
 
 func (taskPool *TaskPool) ReStart(){

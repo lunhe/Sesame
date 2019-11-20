@@ -1,6 +1,7 @@
 package main
 
 import (
+	"./log"
 	"./taskpool"
 	"fmt"
 	"io"
@@ -16,18 +17,26 @@ func main() {
 		fmt.Println(args,time.Now())
 		return nil
 	},nil)
-	pool := taskpool.NewTaskPool(5,20)
+	pool := taskpool.NewTaskPool(2,5,6)
 
 	pool.Show()
 
-	go func() {for  {
-
-		pool.AddTask(task)
-		time.Sleep(time.Second*1)
-	}
+	go func(){
+		i:= 0
+		for  {
+			i++
+			log.Info("投递",i%10,"个任务")
+			for j := 0 ; j < i%10 ; j++  {
+				pool.AddTask(task)
+			}
+			time.Sleep(time.Second*3)
+		}
 	}()
 
 	pool.Start()
+
+	time.Sleep(time.Hour);
+
 	//StartServer()
 }
 

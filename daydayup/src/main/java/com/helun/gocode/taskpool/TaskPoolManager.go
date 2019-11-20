@@ -6,6 +6,9 @@ import (
 	"runtime"
 	"runtime/debug"
 	"strconv"
+	"strings"
+	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -14,14 +17,27 @@ const default_closePool = "closePool"
 const default_taskManager = "taskManager"
 const default_show = "show"
 
-func (taskPool *TaskPool) getWorkerNum() int {
-	 num := taskPool.workerStatus.Count()
-	 for _,id := range taskPool.workerStatus.Keys() {
-		 if isDefaultTask(id) {
-			 num --
-		 }
-	 }
-	 return num
+var lock sync.Mutex
+
+func (taskPool *TaskPool) getWorkerNum() (int,int) {
+	num := taskPool.workerStatus.Count()
+	max := 0
+	for _, id := range taskPool.workerStatus.Keys() {
+		if isDefaultTask(id) {
+			num--
+		}else {
+			index := strings.Index(id,"worker")
+
+			if num,err := strconv.Atoi(id[index+6:]);err==nil{
+				if num > max {
+					max = num
+				}
+			}else {
+				log.Debug(err)
+			}
+		}
+	}
+	return num,max
 }
 
 func finally() {
@@ -36,26 +52,29 @@ func finally() {
 
 }
 
-
 func (taskPool *TaskPool) worker(workerId string) {
 	defer finally()
 	defer func() {
-		taskPool.workerStatus.Set(workerId,false)
+		taskPool.workerStatus.Set(workerId, false)
+		atomic.AddInt32(taskPool.workerCount, -1)
 	}()
-	taskPool.workerStatus.Set(workerId,true)
-	workerNum := taskPool.getWorkerNum()
+	taskPool.workerStatus.Set(workerId, true)
+	atomic.AddInt32(taskPool.workerCount, 1)
+	workerNum,_ := taskPool.getWorkerNum()
 
 	for taskPool.isRunning {
-		if val,_:=taskPool.workerStatus.Get(workerId);!val.(bool) {
+		if val, _ := taskPool.workerStatus.Get(workerId); val == nil || !val.(bool) {
 			break
 		}
 		if len(taskPool.jobsChannel) == 0 || len(taskPool.jobsChannel)*2 < workerNum {
-			break
+			if int(*taskPool.workerCount) > taskPool.defaultWorker {
+				break
+			}
 		}
 		task, ok := <-taskPool.jobsChannel
 		if ok {
-			taskPool.currentTaskStop.Set(workerId,task.stop)
-			if err := task.Execute(workerId);err!=nil{
+			taskPool.currentTaskStop.Set(workerId, task.stop)
+			if err := task.Execute(workerId); err != nil {
 				log.ErrInfo(err)
 			}
 		} else {
@@ -66,36 +85,39 @@ func (taskPool *TaskPool) worker(workerId string) {
 
 func (taskPool *TaskPool) workerFactory(cap int) {
 	defer finally()
-	workerNum := taskPool.getWorkerNum()
-	if workerNum < taskPool.workerNum {
-		for i := 0; i < cap; i++ {
-			num := workerNum + 1
-			workerId := "worker" + strconv.Itoa(num)
-			go taskPool.worker(workerId)
-		}
+
+	workerNum,maxId := taskPool.getWorkerNum()
+	needWorker := taskPool.workerNum - workerNum
+	for i := 0; i < cap && needWorker > 0; i++ {
+		workerNum++
+		maxId ++
+		workerId := "worker" + strconv.Itoa(maxId)
+		log.Info("当前工作任务：", workerNum, "即将新建任务：", workerId, "cap", cap)
+		go taskPool.worker(workerId)
+		needWorker --
 	}
 }
 
-func isDefaultTask(taskId string) bool{
-	return taskId==default_doWork||taskId==default_closePool||taskId==default_taskManager||default_show == taskId
+func isDefaultTask(taskId string) bool {
+	return taskId == default_doWork || taskId == default_closePool || taskId == default_taskManager || default_show == taskId
 }
 
 func (taskPool *TaskPool) closePool() {
 	defer finally()
 	defer func() {
-		taskPool.workerStatus.Set(default_closePool,false)
+		taskPool.workerStatus.Set(default_closePool, false)
 	}()
-	taskPool.workerStatus.Set(default_closePool,true)
+	taskPool.workerStatus.Set(default_closePool, true)
 
 	taskPool.isRunning = false
-	taskPool.workerStatus.Set(default_doWork,false)
-	taskPool.workerStatus.Set(default_taskManager,false)
+	taskPool.workerStatus.Set(default_doWork, false)
+	taskPool.workerStatus.Set(default_taskManager, false)
 
-	for _,id := range taskPool.workerStatus.Keys() {
-		status,_ := taskPool.workerStatus.Get(id)
+	for _, id := range taskPool.workerStatus.Keys() {
+		status, _ := taskPool.workerStatus.Get(id)
 		if !isDefaultTask(id) && status.(bool) {
-			taskStop,ok := taskPool.currentTaskStop.Get(id)
-			if ok&&taskStop!=nil{
+			taskStop, ok := taskPool.currentTaskStop.Get(id)
+			if ok && taskStop != nil {
 				taskStop.(func())()
 			}
 			taskPool.workerStatus.Set(id, false)
@@ -104,19 +126,19 @@ func (taskPool *TaskPool) closePool() {
 
 	close(taskPool.EntryChannel)
 	close(taskPool.jobsChannel)
-	taskPool.currentTaskStop= nil
-	taskPool.workerStatus= nil
+	taskPool.currentTaskStop = nil
+	taskPool.workerStatus = nil
 
 }
 
 func (taskPool *TaskPool) dealTask() {
 	defer finally()
 	defer func() {
-		taskPool.workerStatus.Set(default_doWork,false)
+		taskPool.workerStatus.Set(default_doWork, false)
 	}()
-	taskPool.workerStatus.Set(default_doWork,true)
+	taskPool.workerStatus.Set(default_doWork, true)
 	for taskPool.isRunning {
-		if val,_ := taskPool.workerStatus.Get(default_doWork) ; !val.(bool){ // TODO map中查询不到的bool 返回什么
+		if val, _ := taskPool.workerStatus.Get(default_doWork); val == nil || !val.(bool) {
 			break
 		}
 		task, ok := <-taskPool.EntryChannel
@@ -141,43 +163,52 @@ func (taskPool *TaskPool) goManager() {
 
 	for taskPool.isRunning {
 
-		for _,id := range taskPool.workerStatus.Keys() {
-			status,_ := taskPool.workerStatus.Get(id)
+		for _, id := range taskPool.workerStatus.Keys() {
+			status, _ := taskPool.workerStatus.Get(id)
 			if !status.(bool) {
 				taskPool.workerStatus.Remove(id)
 				taskPool.currentTaskStop.Remove(id)
 			}
-
-			needWorkerNum := taskPool.workerNum
-			if needWorkerNum > len(taskPool.jobsChannel) {
-				needWorkerNum = len(taskPool.jobsChannel)
-			}
-
-			if taskPool.getWorkerNum() < needWorkerNum {
-				taskPool.workerFactory(needWorkerNum - taskPool.getWorkerNum())
-			}
 		}
 
-		time.Sleep(time.Second * 1)
+
+		needWorkerNum := taskPool.workerNum
+		if needWorkerNum > len(taskPool.jobsChannel) {
+			needWorkerNum = len(taskPool.jobsChannel)
+		}
+		workerNum,_ :=taskPool.getWorkerNum()
+		if needWorkerNum > workerNum {
+			taskPool.workerFactory(needWorkerNum - workerNum)
+		}
+
+		time.Sleep(time.Microsecond*100)
 	}
 }
 
-func (taskPool *TaskPool) show(){
+func (taskPool *TaskPool) show() {
 	defer finally()
 	defer func() {
-		taskPool.workerStatus.Set(default_show,false)
+		taskPool.workerStatus.Set(default_show, false)
 	}()
-	taskPool.workerStatus.Set(default_show,true)
-	for   {
+	taskPool.workerStatus.Set(default_show, true)
+	for {
 		log.Info("================================")
-		log.Info("状态：运行中：",taskPool.isRunning)
-		log.Info("最大工作协程数：",taskPool.workerNum)
-		log.Info("任务队列：",len(taskPool.EntryChannel))
-		log.Info("执行队列：",len(taskPool.jobsChannel))
-		log.Info("协程数：",len(taskPool.workerStatus))
-		log.Info("工作协程数：",taskPool.getWorkerNum())
-		log.Info("当前任务数：",len(taskPool.currentTaskStop))
-		log.Info("当前协程状态：",taskPool.workerStatus)
-		time.Sleep(time.Second*5)
+		log.Info("状态：运行中：", taskPool.isRunning)
+		log.Info("最大工作协程数：", taskPool.workerNum)
+		log.Info("最大任务队列：", cap(taskPool.EntryChannel))
+		log.Info("最大执行队列：", cap(taskPool.jobsChannel))
+		log.Info("任务队列：", len(taskPool.EntryChannel))
+		log.Info("执行队列：", len(taskPool.jobsChannel))
+		log.Info("协程数：", taskPool.workerStatus.Count())
+		workerNum,_ := taskPool.getWorkerNum()
+		log.Info("工作协程数：",workerNum )
+		log.Info("当前托管任务数：", taskPool.currentTaskStop.Count())
+		log.Info("当前实际任务数：", *taskPool.workerCount)
+		log.Info("当前协程状态：")
+		for _, workId := range taskPool.workerStatus.Keys() {
+			status, _ := taskPool.workerStatus.Get(workId)
+			log.Info(workId, ":", status)
+		}
+		time.Sleep(time.Second * 2)
 	}
 }
