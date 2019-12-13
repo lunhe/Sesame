@@ -2,8 +2,7 @@ package com.helun.menu.boot;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
@@ -12,13 +11,14 @@ import java.util.concurrent.TimeoutException;
 import com.helun.menu.api.MergeCEServiceLabel;
 import com.helun.menu.api.TaskBOFactory;
 import com.helun.menu.model.BaseEntity;
-import com.helun.menu.util.FileLoader;
 
-public class Main {
-	private static MergeTaskService mergeTaskService ;
+public class Main1 {
+
+	
+	private static MergeTaskService1 mergeTaskService ;
 	public static void main(String[] args) {
 		System.out.println("------------------0");
-		mergeTaskService = new MergeTaskService(new TaskBOFactory() {
+		mergeTaskService = new MergeTaskService1(new TaskBOFactory() {
 			
 			@Override
 			public BaseEntity buid(Long userId, Date applyTime, String... data) {
@@ -26,6 +26,14 @@ public class Main {
 				return new BaseEntity();
 			}
 		}, new MergeCEServiceLabel() {
+			
+			private void isInterrupted() {
+				System.out.println(Thread.currentThread().isInterrupted());
+				if(Thread.interrupted()) {
+					System.out.println("任务被取消");
+					throw new RuntimeException("任务被取消");
+				}
+			}
 			
 			@Override
 			public Object servic(Collection<BaseEntity> taskBos) {
@@ -35,6 +43,7 @@ public class Main {
 					for(int j = 0 ; j < 10000 ; j++) {
 						if(i%2000==0&&j%2000==0){
 							try {
+								isInterrupted();
 								Thread.sleep(600);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
@@ -47,14 +56,14 @@ public class Main {
 				System.out.println("finish  "+Thread.currentThread().getId() + " ======> "+ (end-start)+"ms");
 				return 0;
 			}
-		}, 500, 60);
+		}, 1000, 60);
 		System.out.println("------------------1");
 		for(int i = 0 ; i< 55 ;i ++) {
 			demoClient(i);
 		}
 		System.out.println("------------------2");
 		
-	}
+	}	
 	
 	
 	public static void demoClient(int i) {
@@ -68,13 +77,9 @@ public class Main {
 					future = mergeTaskService.addTask(1000L, new Date(), "test");
 					//future.get();
 					future.get(5, TimeUnit.SECONDS);
+					System.out.println("正常结束");
 				} catch (TimeoutException e) {
 					e.printStackTrace();
-					ArrayBlockingQueue<BaseEntity> queue = mergeTaskService.taskQueueMap.get("1000");
-					System.out.println(Thread.currentThread().getId() + "===" +"queue size :   "  + queue.size());
-					System.out.println(Thread.currentThread().getId() + "===" +mergeTaskService.futureQueueMap);
-					System.out.println(Thread.currentThread().getId() + "===" +"cancelled:    " + future.isCancelled());
-					System.out.println(Thread.currentThread().getId() + "===" +"isdone:   "+future.isDone());
 					Boolean isCanceled = future.cancel(true);
 					if(isCanceled) {
 						System.out.println(Thread.currentThread().getId() + "===" +"提交答案超时");
@@ -87,20 +92,12 @@ public class Main {
 					}
 				}
 				}catch(Exception e){
+					e.printStackTrace();
 					System.out.println("null");
 				}
 			}
 		}).start();
 	}
-
-	public static void testMenu() {
-		List<String> menus = FileLoader.readFileByLineOnResources("src/main/resources/menu.json");
-		Random random = new Random();
-		if (menus.size() > 0) {
-			for (int i = 0; i < 3; i++) {
-				System.out.println(random.nextInt(menus.size()));
-				System.out.println(menus.get(random.nextInt(menus.size())));
-			}
-		}
-	}
 }
+
+

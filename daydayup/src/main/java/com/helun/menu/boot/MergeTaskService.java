@@ -3,6 +3,7 @@ package com.helun.menu.boot;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
@@ -14,6 +15,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.helun.menu.api.MergeCEServiceLabel;
 import com.helun.menu.api.TaskBOFactory;
+import com.helun.menu.boot.MergeTaskService2.ApplyCourseTask;
 import com.helun.menu.model.BaseEntity;
 
 public class MergeTaskService {
@@ -69,7 +71,7 @@ public class MergeTaskService {
 				future = futureQueueMap.get(queueKey);
 				if (future == null) {
 					Callable<Object> applyCourseTask = new ApplyCourseTask(queueKey);
-					future = new FutureTask<Object>(applyCourseTask);
+					future = new ApplyCourseFutureTask<Object>(applyCourseTask);
 					futureQueueMap.put(queueKey, future);
 				}
 			}
@@ -101,14 +103,51 @@ public class MergeTaskService {
 		}
 		return length;
 	}
+	/**
+	 * 任务执行结束后检查taskQueueMap中的队列是否为空，为空则删除，避免内存溢出
+	 */
+	private void clearTaskQueueMap(String queueKey) {
+		Queue<BaseEntity> taskQueue = taskQueueMap.get(queueKey);
 
+		synchronized (taskQueueMap) {
+			taskQueue = taskQueueMap.get(queueKey);
+			synchronized (taskQueue) {
+				if (taskQueue != null && taskQueue.size() == 0) {
+					taskQueueMap.remove(queueKey);
+				}else {
+					FutureTask<Object> futureTask = futureQueueMap.get(queueKey);
+					if(futureTask == null) {
+						taskQueueMap.remove(queueKey);
+					}
+				}
+			}
+		}
+	}
+
+	public class ApplyCourseFutureTask<T> extends FutureTask<T>{
+		private ApplyCourseTask applyCourseTask;
+		public ApplyCourseFutureTask(Callable<T> callable) {
+			super(callable);
+			this.applyCourseTask = (ApplyCourseTask)callable;
+		}
+		
+		@Override
+		protected void done() {
+			applyCourseTask.clear();
+			System.out.println(Thread.currentThread().getId() + "=================>"+ "线程结束，清理缓存");
+		}
+		
+	}
 	public class ApplyCourseTask implements Callable<Object> {
 		private String queueKey = null;
 
 		public ApplyCourseTask(String queueKey) {
 			this.queueKey = queueKey;
 		}
-
+		public void clear() {
+			clearTaskQueueMap(queueKey);
+		}
+		
 		@Override
 		public Object call() throws Exception {
 			Thread.sleep(excutePriod);
