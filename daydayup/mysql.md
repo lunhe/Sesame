@@ -1,4 +1,6 @@
 ##MySQL
+###join
+![](./sql-join.png)
 ###Notes
 一个数据迁移时候的优化方案
 

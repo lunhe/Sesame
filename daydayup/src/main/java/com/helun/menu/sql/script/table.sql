@@ -6,6 +6,5 @@ create table if not exists menu(
 	name varchar(50) not null,
 	menuType tinyint not null,
 	description varchar(240) not null,
-	tasteId char(36),
 	PRIMARY KEY (menuId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
