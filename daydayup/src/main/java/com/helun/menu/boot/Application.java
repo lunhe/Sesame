@@ -3,11 +3,17 @@ package com.helun.menu.boot;
 import java.util.List;
 import java.util.Random;
 
+import com.helun.menu.util.ExcelFactory;
 import com.helun.menu.util.FileLoader;
 
 public class Application {
 	public static void main(String[] args) {
-		testMenu();	
+		try {
+			ExcelFactory excelFactory = new ExcelFactory("C:\\Users\\Administrator\\Desktop\\","excelTest.xls") ;
+			excelFactory.newExcel().addSheet("预习分析").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
