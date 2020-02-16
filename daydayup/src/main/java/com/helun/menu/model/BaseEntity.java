@@ -1,8 +1,9 @@
 package com.helun.menu.model;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 
-public class BaseEntity {
+public class BaseEntity implements Serializable{
 	public String toString() {
 		Field[] fields = this.getClass().getDeclaredFields();
 		StringBuffer buffer = new StringBuffer();
