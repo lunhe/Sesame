@@ -26,3 +26,7 @@ CAS与Synchronized的使用情景：　　　
 　　　补充： synchronized在jdk1.6之后，已经改进优化。synchronized的底层实现主要依靠Lock-Free的队列，基本思路是自旋后阻塞，竞争切换后继续竞争锁，稍微牺牲了公平性，但获得了高吞吐量。在线程冲突较少的情况下，可以获得和CAS类似的性能；而线程冲突严重的情况下，性能远高于CAS。
 
 ![](./concurrent.png)
+
+
+###
+	对代码中的clear  reset  等重置，清除操作应该格外注意
