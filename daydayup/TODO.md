@@ -22,6 +22,7 @@
 		搜罗出常见算法，考虑如何才能不忘记
 		找一些大数据入门资料
 		找一些数据分析入门资料
+			[Elasticsearch](https://es.xiaoleilu.com/010_Intro/05_What_is_it.html)
 		找一些人工智能入门资料
 		第二技能：？
 	证书：
