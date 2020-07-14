@@ -1,65 +1,94 @@
 package com.helun.menu.boot;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
 
 import com.google.common.collect.Lists;
-import com.helun.menu.model.AnalysisSheetModel;
-import com.helun.menu.model.StudentSheetModel;
-import com.helun.menu.util.AnalysisExcelFactory;
-import com.helun.menu.util.FileLoader;
+import com.helun.menu.performance.TestVO;
+import com.helun.menu.performance.IMergeSETaskAdapter;
+import com.helun.menu.performance.LXXLoginInfo;
+import com.helun.menu.performance.LXXResult;
+import com.helun.menu.performance.MergeSETaskAdapter;
+import com.helun.menu.performance.MergeSETaskBOBuilder;
+import com.helun.menu.performance.MergeSETaskFuture;
+import com.helun.menu.performance.TestServiceImpl;
+import com.helun.menu.performance.TestTaskBOBuilder;
 
 public class Application {
-	public static void main(String[] args) {
-		try {
-			
-			AnalysisSheetModel analysisSheetModel = buildAnalysisDate();
-			StudentSheetModel studentSheetModel = buildStudentDate();
-			List<StudentSheetModel> studentSheetModels = Lists.newArrayList();
-			studentSheetModels.add(studentSheetModel);
-			studentSheetModels.add(studentSheetModel);
-			studentSheetModels.add(studentSheetModel);
-			String filePath = "C:\\Users\\茗德\\Desktop\\" ;
-			String fileName = "预习分析_" + analysisSheetModel.getTitle()+".xls" ;
-			
-			AnalysisExcelFactory analysisExcelFactory = new AnalysisExcelFactory(filePath,fileName) ;
-			analysisExcelFactory.newExcel().addAnalysisSheet("预习分析",analysisSheetModel)
-			.addStudentSheet(studentSheetModels).build();;
-			
-		} catch (Exception e) {
-			e.printStackTrace();
+
+	public static void main(String[] args) throws IOException {
+
+//		doMergeTest() ;
+//		new GS().show(1,1000L);
+//		new GS().show(2,2000L);
+
+		MergeSETaskBOBuilder mergeSETaskBOBuilder = new MergeSETaskBOBuilder();
+		mergeSETaskBOBuilder.setVOClass(TestVO.class);
+		mergeSETaskBOBuilder.addParams("date", "this is data").addParams("files", null).addParams("testUseTime", 100L)
+				.addParams("id", null).addParams("type", 10);
+		System.out.println(mergeSETaskBOBuilder.build());
+	}
+
+	static class P {
+		List<Long> ids = Lists.newArrayList();
+
+		void show(int i) {
+			System.out.println("p" + i + ids);
 		}
 	}
-	
-	
-	public static AnalysisSheetModel buildAnalysisDate() {
-		AnalysisSheetModel analysisSheetModel = new AnalysisSheetModel() ;
-		analysisSheetModel.setAvgCorrectRate("80%").setTime("布置时间: 2020-02-11 14:01 截止时间: 2020-02-12 14:01")
-		.setTitle("第一单元预习").addPointsToCorrectRate("整数","89%").addRequestsToCorrectRate("第1题", "78%")
-		.addRequestsToCorrectRate("第2题", "待批改").addStudentResult("李明明", "91", "91%", "2020/2/11 15:01:00", "已交")
-		.addStudentResult("王晓红", "待批改", "待批改", "2020/2/11 15:01:00", "迟交")
-		.addStudentResult("李明明", "", "", "", "未交");
-		return analysisSheetModel ;
-		
+
+	static class S extends P {
+		void show(int i) {
+			System.out.println("S" + i);
+			super.show(++i);
+		}
 	}
-	
-	public static StudentSheetModel buildStudentDate(){
-		StudentSheetModel studentSheetModel = new StudentSheetModel() ;
-		studentSheetModel.setName("李明明").setNumber("学号：1123").setSubmitTime("提交时间：2020/2/11 15:01:00")
-		.setTotalSocre("80/100").setTotalCorrectRate("80%")
-		.addAnswerResult("第1題", "5/6", "80%")
-		.addAnswerResult("第2題", "5/7", "80%");
-		return studentSheetModel ;
+
+	static class GS extends S {
+		void show(int i, Long id) {
+			ids.add(id);
+			System.out.println("GS" + i);
+			super.show(++i);
+		}
 	}
-	
-	public static void testMenu() {
-		List<String> menus = FileLoader.readFileByLineOnResources("src/main/resources/menu.json");
-		Random random = new Random();
-		if (menus.size() > 0) {
-			for (int i = 0; i < 3; i++) {
-				System.out.println(random.nextInt(menus.size()));
-				System.out.println(menus.get(random.nextInt(menus.size())));
+
+	public static void doMergeTest() {
+		IMergeSETaskAdapter mergeSETaskAdapter = new MergeSETaskAdapter();
+		new TestServiceImpl(mergeSETaskAdapter);
+
+		for (int i = 0; i < 100; i++) {
+
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
+			System.out.println("投递" + i);
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					LXXResult result = testRequest(mergeSETaskAdapter, 10, 10001L);
+					System.out.println(Thread.currentThread().getName() + " ==> " + result);
+				}
+			}).start();
 		}
 	}
+
+	public static LXXResult testRequest(IMergeSETaskAdapter mergeSETaskAdapter, Integer age, Long classId) {
+		TestTaskBOBuilder taskBOBuilder = new TestTaskBOBuilder();
+		taskBOBuilder.setAge(age);
+		taskBOBuilder.setClassId(classId);
+		taskBOBuilder.setId(Thread.currentThread().getId());
+		taskBOBuilder.setName(Thread.currentThread().getName());
+
+		LXXLoginInfo loginInfo = new LXXLoginInfo();
+
+		MergeSETaskFuture<Map<String, LXXResult>> future = mergeSETaskAdapter.addTask(loginInfo, taskBOBuilder);
+
+		Long waitTime = 10L;
+		LXXResult result = mergeSETaskAdapter.waitResult(future, waitTime, taskBOBuilder.getId().toString());
+		return result;
+	}
+
 }
