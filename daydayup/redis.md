@@ -17,7 +17,7 @@
 	5 分析bigkey,bigkey会影响redis的内存申请和释放效率
 		避免bigKey
 		开启lazyfree-lazy-user-del = yes，这样删除后的内存释放操作会在后台的其他线程执行。
-	6 集中过期，大量的key集中到期，redis在主线中执行清理操作，该操作会循环执行，直到过期key低于25%或者单次执行时间超过25ms。需要注意到是这种才做不会出现慢日志中。
+	6 集中过期，大量的key集中到期，redis在主线中执行清理操作，该操作会循环执行，直到过期key低于25%或者单次执行时间超过25ms。需要注意到是这种操作不会出现慢日志中。
 		避免集中过期
 		为高频业务的过期加随机值
 		开启延迟删除机制
@@ -65,3 +65,50 @@ redis特点
 	既然这样，有没有可以能在设计之初规划好一个不同服务的标准出入口，并在这里增加检测。就像是主板上的总线，消息总是要经过总线才能到达不同的设备。
 
 ```
+
+
+###Raft协议
+角色：leader，follower，Candidate
+
+term：选举周期，保证一个选举周期内只有一个leader，约束term异常的节点。（原则是：term交小的节点退回到follower状态，并同步大的term值）
+
+选举：每个follower节点在无法与leader通信时，的每个term都随机启动一个定时器，每个term的follower只有一张投票权，将自己更新为Candidate并向其他follower发送选举请求。获得(2n+1)/2 的选举就可以成为新的leader。如果在一个term同时中存在多个Candidate，要么有一个升级为leader，要么所有的Candidate票数都不会过半，这将直接开启下一个term，重新选举。
+
+一致性：一致性算法都采用同步操作日志进行数据同步。leader负责所有客户端交互，leader通知follower同步更新log，并等待ack。保证指令的有效和操作顺序。leader只需要收到(2n+1)/2 的ack就会将该日志设置为已提交。
+
+安全性：使用term保证被选举出来的leader一定是包含之前已经提交的log的。
+
+
+
+
+###vlan网络
+http://www.qianjia.com/html/2019-03/19_329607.html
+vlan：虚拟子网。（使用端口划分的静态子网，使用终端mac，用户，ip划分的动态子网）
+vlan内通信：直接使用直连的二层交换机，（夸交换机则使用trunk link（汇聚连接）通信）
+vlan间通信：使用带有转发功能的三层交换机
+
+二层交换机：工作在数据链路层（只能处理mac地址），使用mac地址直接通信，速度快。
+三层交换机（简单路由+二层交换机）：工作在网络层（可以识别IP地址），使用IP转发报文，使用二层的物理硬件分发报文。
+
+
+###redis-RDB-AOF
+
+Redis 默认开启RDB持久化方式，在指定的时间间隔内，执行指定次数的写操作，则将内存中的数据写入到磁盘中。
+RDB 持久化适合大规模的数据恢复但它的数据一致性和完整性较差。
+Redis 需要手动开启AOF持久化方式，默认是每秒将写操作日志追加到AOF文件中。
+AOF 的数据完整性比RDB高，但记录内容多了，会影响数据恢复的效率。
+Redis 针对 AOF文件大的问题，提供重写的瘦身机制。
+若只打算用Redis 做缓存，可以关闭持久化。
+若打算使用Redis 的持久化。建议RDB和AOF都开启。其实RDB更适合做数据的备份，留一后手。AOF出问题了，还有RDB。
+
+rewrite机制：aof里存放了所有的redis 操作指令，当aof文件达到一定条件或者手动
+bgrewriteaof命令都可以触发rewrite。
+rewrite之后aof文件会保存keys的最后的状态，清除掉之前冗余的，来缩小这个文件。
+
+自动触发的条件：
+ long long growth =(server.appendonly_current_size*100/base) - 100;
+ if (growth >=server.auto_aofrewrite_perc)
+
+在配置文件里设置过：
+auto-aof-rewrite-percentage 100 （当前写入日志文件的大小超过上一次rewrite之后的文件大小的百分之100时就是2倍时触发Rewrite）
+
